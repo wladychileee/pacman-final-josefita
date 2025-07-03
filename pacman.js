@@ -219,6 +219,21 @@ class PacmanNivel extends Phaser.Scene {
         this.jugador.setDisplaySize(44, 44); // Ajuste para que el jugador no se distorsione
         this.physics.add.collider(this.jugador, this.walls);
         this.cursors = this.input.keyboard.createCursorKeys();
+        // Soporte para controles táctiles
+        this.direccionTactil = null;
+        // Eventos para botones táctiles
+        const btnArriba = document.getElementById('flecha-arriba');
+        const btnAbajo = document.getElementById('flecha-abajo');
+        const btnIzquierda = document.getElementById('flecha-izquierda');
+        const btnDerecha = document.getElementById('flecha-derecha');
+        if (btnArriba && btnAbajo && btnIzquierda && btnDerecha) {
+            btnArriba.ontouchstart = () => { this.direccionTactil = 'up'; };
+            btnAbajo.ontouchstart = () => { this.direccionTactil = 'down'; };
+            btnIzquierda.ontouchstart = () => { this.direccionTactil = 'left'; };
+            btnDerecha.ontouchstart = () => { this.direccionTactil = 'right'; };
+            btnArriba.ontouchend = btnAbajo.ontouchend = btnIzquierda.ontouchend = btnDerecha.ontouchend = () => { this.direccionTactil = null; };
+        }
+
         // Colisión: si el jugador toca el círculo invisible, elimina el emoji y el círculo y reproduce el sonido
         this.physics.add.overlap(this.jugador, this.animalesGroup, (jugador, collider) => {
             if (collider.emoji) collider.emoji.destroy();
@@ -233,10 +248,10 @@ class PacmanNivel extends Phaser.Scene {
     update() {
         // Movimiento del jugador
         this.jugador.setVelocity(0);
-        if (this.cursors.left.isDown) this.jugador.setVelocityX(-120);
-        else if (this.cursors.right.isDown) this.jugador.setVelocityX(120);
-        if (this.cursors.up.isDown) this.jugador.setVelocityY(-120);
-        else if (this.cursors.down.isDown) this.jugador.setVelocityY(120);
+        if (this.cursors.left.isDown || this.direccionTactil === 'left') this.jugador.setVelocityX(-120);
+        else if (this.cursors.right.isDown || this.direccionTactil === 'right') this.jugador.setVelocityX(120);
+        if (this.cursors.up.isDown || this.direccionTactil === 'up') this.jugador.setVelocityY(-120);
+        else if (this.cursors.down.isDown || this.direccionTactil === 'down') this.jugador.setVelocityY(120);
         // Mantener los emojis encima de sus colliders
         if (this.animalEmojis && this.animalesGroup) {
             this.animalesGroup.getChildren().forEach(collider => {

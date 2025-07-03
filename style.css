@@ -1,4 +1,23 @@
 body {
+
+#controles-movimiento {
+  text-align: center;
+  margin: 20px 0;
+}
+#controles-movimiento button {
+  font-size: 2rem;
+  margin: 4px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 2px solid #00bfff;
+  background: #e3f7ff;
+  cursor: pointer;
+  box-shadow: 1px 2px 6px #b3e0ff;
+}
+#controles-movimiento button:active {
+  background: #b3e0ff;
+}
+\n\n#controles-movimiento {\n  text-align: center;\n  margin: 20px 0;\n}\n#controles-movimiento button {\n  font-size: 2rem;\n  margin: 4px;\n  padding: 10px 18px;\n  border-radius: 12px;\n  border: 2px solid #00bfff;\n  background: #e3f7ff;\n  cursor: pointer;\n  box-shadow: 1px 2px 6px #b3e0ff;\n}\n#controles-movimiento button:active {\n  background: #b3e0ff;\n}\n
     background: #f0f8ff;
     font-family: 'Comic Sans MS', cursive, sans-serif;
     margin: 0;
